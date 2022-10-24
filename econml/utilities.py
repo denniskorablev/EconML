@@ -549,7 +549,7 @@ def check_input_arrays(*args, validate_len=True, force_all_finite=False, dtype=N
     for i, arg in enumerate(args):
         if np.ndim(arg) > 0:
             new_arg = check_array(arg, dtype=dtype, ensure_2d=False, accept_sparse=True,
-                                  force_all_finite='allow-nan')
+                                  force_all_finite=False)
             if not force_all_finite:
                 # For when checking input values is disabled
                 try:

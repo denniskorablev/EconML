@@ -62,7 +62,7 @@ class EnsembleCateEstimator:
     @weights.setter
     def weights(self, value):
         weights = check_array(value, accept_sparse=False, ensure_2d=False, allow_nd=False, dtype='numeric',
-                              force_all_finite='allow-nan')
+                              force_all_finite=False)
         if np.any(weights < 0):
             raise ValueError("All weights in parameter `weights` must be non-negative.")
         self._weights = weights

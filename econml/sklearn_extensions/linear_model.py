@@ -1153,7 +1153,7 @@ class MultiOutputDebiasedLasso(MultiOutputRegressor):
             The standard error of each coordinate of the output at each point we predict
         """
         n_estimators = len(self.estimators_)
-        X = check_array(X, force_all_finite='allow-nan')
+        X = check_array(X, force_all_finite=False)
         pred_stderr = np.empty((X.shape[0], n_estimators))
         for i, estimator in enumerate(self.estimators_):
             pred_stderr[:, i] = estimator.prediction_stderr(X)
@@ -1179,7 +1179,7 @@ class MultiOutputDebiasedLasso(MultiOutputRegressor):
             Returns lower and upper interval endpoints.
         """
         n_estimators = len(self.estimators_)
-        X = check_array(X, force_all_finite='allow-nan')
+        X = check_array(X, force_all_finite=False)
         y_lower = np.empty((X.shape[0], n_estimators))
         y_upper = np.empty((X.shape[0], n_estimators))
         for i, estimator in enumerate(self.estimators_):
