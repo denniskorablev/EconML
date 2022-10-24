@@ -514,7 +514,7 @@ def check_inputs(Y, T, X, W=None, multi_output_T=True, multi_output_Y=True):
     return Y, T, X, W
 
 
-def check_input_arrays(*args, validate_len=True, force_all_finite=True, dtype=None):
+def check_input_arrays(*args, validate_len=True, force_all_finite=False, dtype=None):
     """Cast input sequences into numpy arrays.
 
     Only inputs that are sequence-like will be converted, all other inputs will be left as is.
@@ -549,7 +549,7 @@ def check_input_arrays(*args, validate_len=True, force_all_finite=True, dtype=No
     for i, arg in enumerate(args):
         if np.ndim(arg) > 0:
             new_arg = check_array(arg, dtype=dtype, ensure_2d=False, accept_sparse=True,
-                                  force_all_finite=force_all_finite)
+                                  force_all_finite='allow-nan')
             if not force_all_finite:
                 # For when checking input values is disabled
                 try:

@@ -403,7 +403,7 @@ class SingleTreePolicyInterpreter(_SingleTreeInterpreter):
         self: object instance
         """
         if X is not None:
-            X = check_array(X)
+            X = check_array(X, force_all_finite='allow-nan')
             X_in = X
         else:
             X = np.empty(shape=(1, 0))

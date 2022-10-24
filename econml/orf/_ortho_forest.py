@@ -321,7 +321,7 @@ class BaseOrthoForest(TreatmentExpansionMixin, LinearCateEstimator):
     def _predict(self, X, stderr=False):
         if not self.model_is_fitted:
             raise NotFittedError('This {0} instance is not fitted yet.'.format(self.__class__.__name__))
-        X = check_array(X)
+        X = check_array(X, force_all_finite='allow-nan')
         results = Parallel(n_jobs=self.n_jobs, backend=self.backend,
                            batch_size=self.batch_size, verbose=self.verbose)(
             delayed(_pointwise_effect)(X_single, *self._pw_effect_inputs(X_single, stderr=stderr),
@@ -659,7 +659,7 @@ class DMLOrthoForest(BaseOrthoForest):
         return self
 
     def const_marginal_effect(self, X):
-        X = check_array(X)
+        X = check_array(X, force_all_finite='allow-nan')
         # Override to flatten output if T is flat
         effects = super().const_marginal_effect(X=X)
         return effects.reshape((-1,) + self._d_y + self._d_t)
@@ -996,7 +996,7 @@ class DROrthoForest(BaseOrthoForest):
         return self
 
     def const_marginal_effect(self, X):
-        X = check_array(X)
+        X = check_array(X, force_all_finite='allow-nan')
         # Override to flatten output if T is flat
         effects = super().const_marginal_effect(X=X)
         return effects.reshape((-1,) + self._d_y + self._d_t)
@@ -1188,7 +1188,7 @@ class BLBInference(Inference):
                              type of :meth:`const_marginal_effect(X)<const_marginal_effect>` )
             The lower and the upper bounds of the confidence interval for each quantity.
         """
-        X = check_array(X)
+        X = check_array(X, force_all_finite='allow-nan')
         params_and_cov = self._predict_wrapper(X)
         # Calculate confidence intervals for the parameter (marginal effect)
         lower = alpha / 2
@@ -1218,7 +1218,7 @@ class BLBInference(Inference):
             can on demand calculate confidence interval, z statistic and p value. It can also output
             a dataframe summary of these inference results.
         """
-        X = check_array(X)
+        X = check_array(X, force_all_finite='allow-nan')
         params, cov = zip(*(self._predict_wrapper(X)))
         params = np.array(params).reshape((-1,) + self._estimator._d_y + self._estimator._d_t)
         stderr = np.sqrt(np.diagonal(np.array(cov), axis1=1, axis2=2))

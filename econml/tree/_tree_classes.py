@@ -280,7 +280,7 @@ class BaseTree(BaseEstimator):
         """Validate X whenever one tries to predict, apply, or any other of the prediction
         related methods. """
         if check_input:
-            X = check_array(X, dtype=DTYPE, accept_sparse=False, ensure_min_features=0)
+            X = check_array(X, dtype=DTYPE, accept_sparse=False, ensure_min_features=0, force_all_finite='allow-nan')
 
         n_features = X.shape[1]
         if self.n_features_in_ != n_features:
