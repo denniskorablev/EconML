@@ -553,7 +553,7 @@ def check_input_arrays(*args, validate_len=True, force_all_finite=False, dtype=N
             if not force_all_finite:
                 # For when checking input values is disabled
                 try:
-                    assert_all_finite(new_arg)
+                    assert_all_finite(new_arg, allow_nan=True)
                 except ValueError:
                     warnings.warn("Input contains NaN, infinity or a value too large for dtype('float64') "
                                   "but input check is disabled. Check the inputs before proceeding.")
